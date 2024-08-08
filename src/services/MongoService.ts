@@ -10,8 +10,8 @@ export class MongoService
 		return await this.collection.find().toArray();
 	}
 
-	async getOneById(id: ObjectId): Promise<UsersType | null> {
-		return await this.collection.findOne( id );
+	async getOneById(id: string): Promise<UsersType | null> {
+		return await this.collection.findOne( {id} );
 	}
 
 	// async createOne(transaction: TransactionType): Promise<TransactionType | null> {

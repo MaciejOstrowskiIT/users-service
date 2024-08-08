@@ -27,9 +27,6 @@ const start = async () => {
 			await usersController.getUserId( req, res ) );
 		app.get( "/get-user-data/:userID", async (req, res) =>
 			await usersController.getUserData( req, res ) );
-		app.get( "/api/get-users", (req, res) => {
-			res.send( "To jest testowy endpoint GET! Permissions" );
-		} );
 
 
 	} catch ( err ) {
