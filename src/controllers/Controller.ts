@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { ObjectId } from "mongodb";
-import { MongoService } from "../services/MongoService";
+import { UserService } from "../services/MongoService";
 import { ResponseHandler } from "../utils/ResponseHandler";
 
 export class Controller extends ResponseHandler{
-	constructor(private service: MongoService) {
+	constructor(private service: UserService) {
 		super()
 	}
 
@@ -14,7 +13,7 @@ export class Controller extends ResponseHandler{
 			throw new Error('no id provided')
 		}
 		try {
-			const data = await this.service.getOneById(id);
+			const data = await this.service.getUserId(id);
 			res.status(200).send(data);
 		} catch (err) {
 			res.status(504).send(err);
@@ -23,16 +22,13 @@ export class Controller extends ResponseHandler{
 
 	public async getUserData(req: Request, res: Response): Promise<void> {
 		try {
-			// console.log('getUserData service req.params',req.params );
-			// console.log('in getUserData')
 			const id = req.params.userID
 			if(!id) {
 				throw new Error('No id provided')
 			}
 
-			const result = await this.service.getOneById(id);
+			const result = await this.service.getUserData(id);
 			res.status(200).json(result);
-			console.log("result", result);
 
 		} catch (error) {
 			

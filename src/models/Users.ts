@@ -1,14 +1,13 @@
 import { ObjectId } from "mongodb";
 
 export interface UsersType {
-	username: string,
-	password: string,
-	email: string,
-	accountId: null | ObjectId,
-	status: "ACTIVE" | "PENDING",
+	accountId: string,
+	accountNumber: string,
+	address: {
+		street: string,
+		city: string,
+	},
+	status: "ACTIVE" ,
 }
 
-export interface LoginUser {
-	email: string,
-	password: string
-}
+export type UsersDb = Omit<UsersType, "id"> & { _id: string }

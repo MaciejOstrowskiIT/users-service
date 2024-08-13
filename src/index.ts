@@ -3,8 +3,10 @@ import cors from "cors";
 import { logger } from "./utils/logs";
 import { MongoClient } from "mongodb";
 import { Controller } from "./controllers/Controller";
-import { MongoService } from "./services/MongoService";
+import { UserService } from "./services/MongoService";
 import { UsersType } from "./models/Users";
+import { MongoMapper } from "./mappers/MongoMapper";
+import { MongoUserSerializer } from "./mappers/MongoUserSerializer";
 
 const app = express();
 app.use( express.json() );
@@ -20,7 +22,7 @@ const start = async () => {
 		logger( "info", "[Users] Connected" );
 
 		const collection = database.collection<UsersType>( process.env.COLLECTION_NAME! );
-		const service = new MongoService( collection );
+		const service = new UserService( new MongoMapper(database.collection(process.env.COLLECTION_NAME!), new MongoUserSerializer()) );
 		const usersController = new Controller( service );
 
 		app.get( "/get-user-id/:userID", async (req, res) =>
